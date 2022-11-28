@@ -1,0 +1,8 @@
+image_filebeat:
+  repository: elastic/filebeat
+  tag: "8.5.1"
+image_metricbeat:
+  repository: elastic/metricbeat
+  tag: "8.5.1"
+replicaCount: 3
+namespace: default

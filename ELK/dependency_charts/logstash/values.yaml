@@ -1,0 +1,8 @@
+image:
+  repository: logstash
+  tag: "8.5.1"
+replicaCount: 2
+namespace: default
+service:
+  type: ClusterIP
+  port: 5044

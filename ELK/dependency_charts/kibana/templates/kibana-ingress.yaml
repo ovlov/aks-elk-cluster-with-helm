@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "template.fullname" . }}-kibana
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "template.fullname" . }}-kibana
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+  - host: {{ .Values.global.kibana_ingress_url }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: "{{ .Values.global.kibana_service_endpoint }}"
+            port:
+              number: {{ .Values.service.port }}

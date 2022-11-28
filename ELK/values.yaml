@@ -1,0 +1,5 @@
+global:
+  elasticsearch_service_endpoint: "my-elastic"
+  logstash_service_endpoint: "my-logstash"
+  kibana_service_endpoint: "my-kibana"
+  kibana_ingress_url: "mykibana.test.com"

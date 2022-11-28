@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "template.fullname" . }}-kibana
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "template.fullname" . }}-kibana
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "template.fullname" . }}-kibana
+  template:
+    metadata:
+      labels:
+        app: {{ include "template.fullname" . }}-kibana
+    spec:
+      containers:
+      - name: {{ include "template.fullname" . }}-kibana
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        resources:
+          # need more cpu upon initialization, therefore burstable class
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        env:
+          - name: ELASTICSEARCH_URL
+            value: http://{{ .Values.global.elasticsearch_service_endpoint }}:9200
+        ports:
+        - containerPort: {{ .Values.service.port }}
+          name: ui
+          protocol: TCP
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/kibana/config/kibana.yml
+          subPath: kibana.yml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "template.fullname" . }}-kibana
+            items:
+              - key: kibana.yml
+                path: kibana.yml

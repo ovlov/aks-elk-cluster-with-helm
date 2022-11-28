@@ -1,0 +1,9 @@
+image:
+  repository: elasticsearch
+  tag: "8.5.1"
+replicaCount: 1
+namespace: default
+service:
+  type: ClusterIP
+  db_port: 9200
+  service_port: 9300

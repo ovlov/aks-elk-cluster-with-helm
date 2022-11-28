@@ -1,0 +1,8 @@
+image:
+  repository: kibana
+  tag: "8.5.1"
+replicaCount: 3
+namespace: default
+service:
+  type: ClusterIP
+  port: 5601

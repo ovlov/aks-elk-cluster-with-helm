@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "template.fullname" . }}-elasticsearch
+  namespace: {{ .Values.namespace }}
+data:
+  elasticsearch.yml: |
+      cluster.name: "docker-cluster"    
+    
+      cluster.initial_master_nodes: ["full-elasticsearch-0"]
+
+      network.host: 0.0.0.0
+
+      xpack.security.enabled: false
+
+      xpack.security.enrollment.enabled: false
+
+      # Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents
+      xpack.security.http.ssl:
+        enabled: false
+
+      # Enable encryption and mutual authentication between cluster nodes
+      xpack.security.transport.ssl:
+        enabled: false
+
+      

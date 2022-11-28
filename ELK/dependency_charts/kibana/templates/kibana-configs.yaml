@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "template.fullname" . }}-kibana
+  namespace: {{ .Values.namespace }}
+data:
+  kibana.yml: |
+    # Default Kibana configuration for docker target
+    xpack.reporting.kibanaServer.hostname: "localhost"
+    server.host: "0.0.0.0"
+    server.shutdownTimeout: "5s"
+    elasticsearch.hosts: [ "http://{{ .Values.global.elasticsearch_service_endpoint }}:9200" ]
